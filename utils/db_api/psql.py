@@ -13,7 +13,7 @@ class Database:
         if not parameters:
             parameters = ()
         connection = self.connection
-        connection.set_trace_callback(logger)
+        # connection.set_trace_callback(logger)
         cursor = connection.cursor()
         data = None
         cursor.execute(sql, parameters)
@@ -33,11 +33,25 @@ class Database:
             id int NOT NULL,
             Name varchar(255) NOT NULL,
             phone varchar(255),
-            language varchar(3),
+            maktab_raqami int NOT NULL ,
             PRIMARY KEY (id)
             );
 """
         self.execute(sql, commit=True)
+
+    def create_table_teacher(self):
+            sql = """
+            CREATE TABLE Teacher (
+                science varchar(30) UNIQUE NOT NULL ,
+                first_name varchar(255) NOT NULL,
+                last_name varchar(30) NOT NULL ,
+                phone varchar(255) NOT NULL ,
+                ielts varchar(30),
+                stage varchar(30),
+                age varchar(30)
+                );
+    """
+            self.execute(sql, commit=True)
 
     @staticmethod
     def format_args(sql, parameters: dict):
@@ -46,13 +60,20 @@ class Database:
         ])
         return sql, tuple(parameters.values())
 
-    def add_user(self, id: int, name: str, phone: str = None, language: str = 'uz'):
+    def add_user(self, id: int, name: str,maktab_raqami: int,phone: str = None):
         # SQL_EXAMPLE = "INSERT INTO Users(id, Name, email) VALUES(1, 'John', 'John@gmail.com')"
 
         sql = """
-        INSERT INTO Users(id, Name, phone, language) VALUES(?, ?, ?, ?)
+        INSERT INTO Users(id, Name, maktab_raqami, phone) VALUES(?, ?, ?, ?)
         """
-        self.execute(sql, parameters=(id, name, phone, language), commit=True)
+        self.execute(sql, parameters=(id, name, maktab_raqami, phone), commit=True)
+    def add_teacher(self, science: str, first_name: str,last_name: str,phone: str,ielts: str=None,stage: str=None,age: str=None):
+        # SQL_EXAMPLE = "INSERT INTO Users(id, Name, email) VALUES(1, 'John', 'John@gmail.com')"
+
+        sql = """
+        INSERT INTO Teacher(science,first_name, last_name, phone,ielts,stage,age) VALUES(?, ?, ?, ?, ?, ?, ?)
+        """
+        self.execute(sql, parameters=(science,first_name,last_name,phone,ielts,stage,age), commit=True)
 
     def select_all_users(self):
         sql = """
@@ -65,27 +86,36 @@ class Database:
         sql = "SELECT * FROM Users WHERE "
         sql, parameters = self.format_args(sql, kwargs)
 
+        return self.execute(sql, parameters=parameters, fetchall=True)
+    def select_teacher(self, **kwargs):
+        # SQL_EXAMPLE = "SELECT * FROM Users where id=1 AND Name='John'"
+        sql = "SELECT * FROM Teacher WHERE "
+        sql, parameters = self.format_args(sql, kwargs)
+
         return self.execute(sql, parameters=parameters, fetchone=True)
 
-    def count_users(self):
-        return self.execute("SELECT COUNT(*) FROM Users;", fetchone=True)
-
-    def update_user_email(self, email, id):
-        # SQL_EXAMPLE = "UPDATE Users SET email=mail@gmail.com WHERE id=12345"
-
-        sql = f"""
-        UPDATE Users SET email=? WHERE id=?
-        """
-        return self.execute(sql, parameters=(email, id), commit=True)
-
-    def delete_users(self):
-        self.execute("DELETE FROM Users WHERE TRUE", commit=True)
+    def count_165(self):
+        return self.execute("SELECT COUNT(*) FROM Users WHERE maktab_raqami = 165;", fetchone=True)
+    def count_131(self):
+        return self.execute("SELECT COUNT(*) FROM Users WHERE maktab_raqami = 131;", fetchone=True)
 
 
-def logger(statement):
-    print(f"""
-_____________________________________________________        
-Executing: 
-{statement}
-_____________________________________________________
-""")
+    def delete_teacher(self, **kwargs):
+        # SQL_EXAMPLE = "SELECT * FROM Users where id=1 AND Name='John'"
+        sql = "DELETE FROM Teacher WHERE "
+        sql, parameters = self.format_args(sql, kwargs)
+        return self.execute(sql, parameters=parameters, fetchone=True,commit=True)
+
+    def delete_users(self, **kwargs):
+        sql = "DELETE FROM Users"
+        sql, parameters = self.format_args(sql, kwargs)
+        return self.execute(sql, parameters=parameters, fetchall=True,commit=True)
+
+
+# def logger(statement):
+#     print(f"""
+# _____________________________________________________
+# Executing:
+# {statement}
+# _____________________________________________________
+# """)

@@ -1,4 +1,4 @@
-from aiogram.types import KeyboardButton,ReplyKeyboardMarkup
+from aiogram.types import KeyboardButton,ReplyKeyboardMarkup,InlineKeyboardMarkup,InlineKeyboardButton
 
 contact = ReplyKeyboardMarkup(
     keyboard=[
@@ -7,22 +7,23 @@ contact = ReplyKeyboardMarkup(
         ],
     ],resize_keyboard=True,
 )
-vaqt = ReplyKeyboardMarkup(
-    keyboard=[
+vaqt = InlineKeyboardMarkup(
+    inline_keyboard=[
         [
-            KeyboardButton(text='(8:00-12:00)'),
-            KeyboardButton(text='(13:00-17:00)')
+            InlineKeyboardButton(text='(8:00-12:00)',callback_data='(8:00-12:00)'),
+            InlineKeyboardButton(text='(13:00-17:00)',callback_data='(13:00-17:00)')
         ],
     ],resize_keyboard=True
 )
 
-true_false = ReplyKeyboardMarkup(
-    keyboard=[
+true_false = InlineKeyboardMarkup(
+    inline_keyboard=[
         [
-            KeyboardButton(text='✅ Ha'),
-            KeyboardButton(text='❌ Yo\'q')
+            InlineKeyboardButton(text='✅ Ha',callback_data='✅ Ha'),
+            InlineKeyboardButton(text='❌ Yo\'q',callback_data='❌ Yo\'q')
         ],
-    ],resize_keyboard=True
+    ]
+
 )
 
 course = ReplyKeyboardMarkup(
@@ -37,41 +38,56 @@ course = ReplyKeyboardMarkup(
     ],resize_keyboard=True
 )
 
-about_teach = ReplyKeyboardMarkup(
-    keyboard=[
+about_teach = InlineKeyboardMarkup(
+    inline_keyboard=[
         [
-            KeyboardButton(text='Ingliz tili o\'qtuvchisi haqida'),
-            KeyboardButton(text='Matematika o\'qtuvchisi haqida'),
+            InlineKeyboardButton(text='Ingliz tili o\'qtuvchisi haqida',callback_data='english'),
+            InlineKeyboardButton(text='Matematika o\'qtuvchisi haqida',callback_data='math'),
         ],
         [
-            KeyboardButton(text='IT o\'qtuvchisi haqida'),
+            InlineKeyboardButton(text='IT o\'qtuvchisi haqida',callback_data='it'),
         ],
         [
-            KeyboardButton(text='Ortga'),
+            InlineKeyboardButton(text='Ortga',callback_data='back'),
         ]
-    ],resize_keyboard=True
+    ]
 )
 
 ha_yuq = ReplyKeyboardMarkup(
     keyboard=[
         [
-            KeyboardButton(text='✅Yes'),
-            KeyboardButton(text='❌No')
+            KeyboardButton(text='✅ Yes'),
+            KeyboardButton(text='❌ No')
         ],
     ],resize_keyboard=True
 )
 
+tugat = ReplyKeyboardMarkup(
+    keyboard=[
+        [
+            KeyboardButton(text='✅ Ha'),
+            KeyboardButton(text='❌ Yuq')
+        ],
+    ],resize_keyboard=True
+)
+
+
 bosh_menu = ReplyKeyboardMarkup(
     keyboard=[
         [
-            KeyboardButton(text='✅ Kursga yozilish'),
-            KeyboardButton(text='🆒 Rasmiy kanal',),
+            KeyboardButton(text='✅ Kurslarimizga yozilish'),
+            KeyboardButton(text='🆒 Rasmiy kanalimiz')
+
+        ],
+        [
+            KeyboardButton(text='📊 165-Maktab statistikasi'),
+            KeyboardButton(text='📊 131-Maktab statistikasi')
 
         ],
         [
             KeyboardButton(text='🔄 Biz haqimizda'),
-            KeyboardButton(text='📊 Statistika')
-
         ],
-    ],resize_keyboard=True
+
+    ],
+    resize_keyboard=True
 )

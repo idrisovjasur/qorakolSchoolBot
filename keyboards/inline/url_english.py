@@ -1,9 +1,13 @@
 from aiogram.types import InlineKeyboardButton,InlineKeyboardMarkup
 
-url_english = InlineKeyboardMarkup(
+how_subject = InlineKeyboardMarkup(
     inline_keyboard=[
         [
-            InlineKeyboardMarkup(text = 'Ingliz tili nimaga kerak?',url='https://youtu.be/gYVv5eVL3Ww')
+             InlineKeyboardButton(text = 'Ingliz tili',callback_data='ingliz'),
+             InlineKeyboardButton(text = 'IT',callback_data='it')
+        ],
+        [
+             InlineKeyboardButton(text = 'Math',callback_data='math')
         ],
     ],
 )
@@ -14,4 +18,13 @@ qora = InlineKeyboardMarkup(
             InlineKeyboardMarkup(text = '🔗 Rasmiy kanalga o\'tish uchun link',url='https://t.me/qora_kol')
         ],
     ],
+)
+
+son_maktab = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [
+            InlineKeyboardButton(text='131-мактаб',callback_data='131'),
+            InlineKeyboardButton(text = '165-мактаб',callback_data='165'),
+        ],
+    ]
 )
