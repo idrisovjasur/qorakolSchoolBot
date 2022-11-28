@@ -39,6 +39,15 @@ class Database:
 """
         self.execute(sql, commit=True)
 
+    def create_table_lang(self):
+            sql = """
+            CREATE TABLE Lang (
+                id int UNIQUE NOT NULL,
+                language varchar(10) NOT NULL
+                );
+    """
+            self.execute(sql, commit=True)
+
     def create_table_teacher(self):
             sql = """
             CREATE TABLE Teacher (
@@ -67,6 +76,12 @@ class Database:
         INSERT INTO Users(id, Name, maktab_raqami, phone) VALUES(?, ?, ?, ?)
         """
         self.execute(sql, parameters=(id, name, maktab_raqami, phone), commit=True)
+
+    def add_lang(self, id: int, language: str):
+            sql = """
+            INSERT INTO Lang(id, language) VALUES(?, ?)
+            """
+            self.execute(sql, parameters=(id, language), commit=True)
     def add_teacher(self, science: str, first_name: str,last_name: str,phone: str,ielts: str=None,stage: str=None,age: str=None):
         # SQL_EXAMPLE = "INSERT INTO Users(id, Name, email) VALUES(1, 'John', 'John@gmail.com')"
 
@@ -87,6 +102,12 @@ class Database:
         sql, parameters = self.format_args(sql, kwargs)
 
         return self.execute(sql, parameters=parameters, fetchall=True)
+    def select_lang(self, **kwargs):
+        # SQL_EXAMPLE = "SELECT * FROM Users where id=1 AND Name='John'"
+        sql = "SELECT * FROM Lang WHERE "
+        sql, parameters = self.format_args(sql, kwargs)
+
+        return self.execute(sql, parameters=parameters, fetchone=True)
     def select_teacher(self, **kwargs):
         # SQL_EXAMPLE = "SELECT * FROM Users where id=1 AND Name='John'"
         sql = "SELECT * FROM Teacher WHERE "
@@ -110,6 +131,14 @@ class Database:
         sql = "DELETE FROM Users"
         sql, parameters = self.format_args(sql, kwargs)
         return self.execute(sql, parameters=parameters, fetchall=True,commit=True)
+
+    def update_user_lang(self,lang ,id):
+        # SQL_EXAMPLE = "UPDATE Users SET email=mail@gmail.com WHERE id=12345"
+
+        sql = f"""
+        UPDATE Lang SET language=? WHERE id=?
+        """
+        return self.execute(sql, parameters=(lang, id), commit=True)
 
 
 # def logger(statement):

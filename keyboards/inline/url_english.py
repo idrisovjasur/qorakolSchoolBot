@@ -28,3 +28,12 @@ son_maktab = InlineKeyboardMarkup(
         ],
     ]
 )
+
+choice_lang = InlineKeyboardMarkup(
+    inline_keyboard = [
+        [
+            InlineKeyboardButton(text = 'Узбек',callback_data='uz'),
+            InlineKeyboardButton(text = 'Рус',callback_data='ru'),
+        ]
+    ]
+)

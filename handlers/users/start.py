@@ -6,16 +6,66 @@ from aiogram.dispatcher.filters.builtin import CommandStart
 from aiogram.dispatcher import FSMContext
 from aiogram.types import ContentType
 from keyboards.default.contact import contact, vaqt, true_false, course, about_teach, ha_yuq, bosh_menu, tugat
-from keyboards.inline.url_english import son_maktab, qora
+from keyboards.inline.url_english import son_maktab, qora,choice_lang
 from keyboards.inline.url_math import url_math, suniy
 from loader import dp, db, bot
 from data.config import ADMINS
 
-
+#####
 @dp.message_handler(commands=['start'],state='*')
 async def bot_start(message: types.Message,state:FSMContext):
-    await message.answer(text = "<b>Қоракўл маркази ботига хуш келибсиз!\n</b>",reply_markup=bosh_menu)
-    await state.finish()
+    await message.answer('Тилни танланг\n\n'
+                         'Выберите язык',reply_markup=choice_lang)
+    await state.set_state('lang')
+
+@dp.callback_query_handler(state='lang')
+async def lang_def(call:CallbackQuery,state:FSMContext):
+    await call.message.delete()
+    lang = call.data
+    try:
+        db.add_lang(
+            language=lang,
+            id = call.from_user.id
+        )
+        if call.data=='uz':
+            await call.message.answer(text = "<b>Қоракўл маркази ботига хуш келибсиз!\n</b>",reply_markup=bosh_menu)
+            await state.finish()
+            await call.message.delete()
+        elif call.data=='ru':
+            await call.message.answer(text = "<b>Добро пожаловать в бот центра Каракол!\n</b>",reply_markup=bosh_menu)
+            await state.finish()
+            await call.message.delete()
+
+    except Exception as exp:
+        await call.message.answer('Тилни олдинроқ созланган!',reply_markup=bosh_menu)
+        await state.finish()
+
+
+@dp.message_handler(text = '🔧 Tini sozlash')
+async def lang_change(message:types.Message,state:FSMContext):
+    await message.answer(text = 'conf',reply_markup=choice_lang)
+    await state.set_state('change_lang')
+@dp.callback_query_handler(state='change_lang')
+async def change_def(call:CallbackQuery,state:FSMContext):
+    await call.message.delete()
+    try:
+        db.update_user_lang(
+            id=call.from_user.id,
+            lang=call.data
+        )
+    except Exception as exp:
+        print(exp)
+
+    if call.data=='uz':
+        await call.message.answer(text = "<b>Тилни созланди\n</b>",reply_markup=bosh_menu)
+        await state.finish()
+        await call.message.delete()
+    elif call.data=='ru':
+        await call.message.answer(text = "<b>Язык установлен\n</b>",reply_markup=bosh_menu)
+        await state.finish()
+        await call.message.delete()
+
+
 
 
 @dp.message_handler(text = '🆒 Rasmiy kanalimiz')

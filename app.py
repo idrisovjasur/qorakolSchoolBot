@@ -16,6 +16,11 @@ async def on_startup(dispatcher):
         db.create_table_teacher()
     except:
         pass
+    try:
+        db.create_table_lang()
+    except Exception as exp:
+        print(exp)
+
     await on_startup_notify(dispatcher)
 
 

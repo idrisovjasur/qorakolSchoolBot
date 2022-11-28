@@ -86,6 +86,7 @@ bosh_menu = ReplyKeyboardMarkup(
         ],
         [
             KeyboardButton(text='🔄 Biz haqimizda'),
+            KeyboardButton(text='🔧 Tini sozlash')
         ],
 
     ],
