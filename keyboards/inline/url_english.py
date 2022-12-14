@@ -15,7 +15,7 @@ how_subject = InlineKeyboardMarkup(
 qora = InlineKeyboardMarkup(
     inline_keyboard=[
         [
-            InlineKeyboardMarkup(text = '🔗 Rasmiy kanalga o\'tish uchun link',url='https://t.me/qora_kol')
+            InlineKeyboardMarkup(text = '🔗 Rasmiy kanalga o\'tish uchun link',url='https://t.me/qorakul_uquv_markaz')
         ],
     ],
 )

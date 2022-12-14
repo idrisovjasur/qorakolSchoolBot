@@ -63,7 +63,7 @@ async def change_def(call:CallbackQuery,state:FSMContext):
     elif call.data=='ru':
         await call.message.answer(text = "<b>Язык установлен\n</b>",reply_markup=bosh_menu)
         await state.finish()
-        await call.message.delete()
+
 
 
 
