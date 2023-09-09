@@ -115,10 +115,12 @@ class Database:
 
         return self.execute(sql, parameters=parameters, fetchone=True)
 
-    def count_165(self):
-        return self.execute("SELECT COUNT(*) FROM Users WHERE maktab_raqami = 165;", fetchone=True)
+    def count_330(self):
+        return self.execute("SELECT COUNT(*) FROM Users WHERE maktab_raqami = 330;", fetchone=True)
     def count_131(self):
         return self.execute("SELECT COUNT(*) FROM Users WHERE maktab_raqami = 131;", fetchone=True)
+    def count_165(self):
+        return self.execute("SELECT COUNT(*) FROM Users WHERE maktab_raqami = 165;", fetchone=True)
 
 
     def delete_teacher(self, **kwargs):
